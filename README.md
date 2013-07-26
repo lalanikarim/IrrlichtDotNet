@@ -5,8 +5,9 @@ Linux focused .Net bindings for Irrlicht Open Source 3d Graphics Engine.
 
 Project dependencies
 ====================
-1. Qt 5 - for qmake build environment and project management
-2. SWIG 2.0
+1. Irrlicht 1.8
+2. Qt 5 - for qmake build environment and project management
+2. SWIG 2.0 - to generate C# wrappers
 3. Mono 3.0
 4. MonoDevelop v4.0.9
 
