@@ -4,8 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 TARGET = irrlichtDotNet
 SOURCES += main.cpp \
-           irrlicht_wrap.cxx \
-    vector2du32_proxy.cpp
+           irrlicht_wrap.cxx
 
 
 unix:!macx: LIBS += -L/usr/lib/ -lIrrlicht
@@ -17,9 +16,9 @@ QMAKE_CXXFLAGS += -fPIC
 
 OTHER_FILES += \
     irrlicht.i \
-    rect.i \
-    vector2d.i.unused
+    rect.i
 
 HEADERS += \
     vector2du32_proxy.h \
-    vector3du32_proxy.h
+    vector3du32_proxy.h \
+    stringc_proxy.h

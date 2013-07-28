@@ -162,6 +162,7 @@
 
 #include "vector2du32_proxy.h"
 #include "vector3du32_proxy.h"
+#include "stringc_proxy.h"
 #include "irrlicht.h"
 
 using namespace irr;
@@ -175,13 +176,6 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 
 %}
 
-/*
-%ignore irr::core::vector2d<irr::core::u32>::getLength() const;
-%ignore irr::core::vector2d<u32>::getDistanceFrom(const irr::core::vector2d<u32>&) const;
-%ignore irr::core::vector3d<irr::core::u32>::getLength() const;
-%ignore irr::core::vector3d<u32>::getHorizontalAngle() const;
-%ignore irr::core::vector3d<u32>::getDistanceFrom(const irr::core::vector3d<u32>&) const;
-%ignore irr::core::vector3d<unsigned int>::getLength() const;*/
 %ignore irr::core::vector2d<unsigned int>::getLength() const;
 %ignore irr::core::squareroot(unsigned int);
 %ignore irr::core::squareroot(const irr::core::f32 f);
@@ -374,6 +368,7 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 %include "IrrlichtDevice.h"
 %include "vector2du32_proxy.h"
 %include "vector3du32_proxy.h"
+%include "stringc_proxy.h"
 
 %include "irrlicht.h"
 //%template(vector2du) irr::core::vector2d< u32 >;
