@@ -6,8 +6,17 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-
+*.so.*
 # Compiled Static libraries
 *.lai
 *.la
 *.a
+
+*.cs
+*.sln
+
+IrrlichtTest/
+Makefile
+filelist
+irrlicht_wrap.*
+IrrlichtDotNet.userprefs

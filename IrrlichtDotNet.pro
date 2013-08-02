@@ -21,4 +21,5 @@ OTHER_FILES += \
 HEADERS += \
     vector2du32_proxy.h \
     vector3du32_proxy.h \
-    stringc_proxy.h
+    stringc_proxy.h \
+    SWIGIEventReceiver.h

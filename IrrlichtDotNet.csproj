@@ -177,18 +177,25 @@
     <Compile Include="SColorf.cs" />
     <Compile Include="SCursorSprite.cs" />
     <Compile Include="SEvent.cs" />
+    <Compile Include="SEventProxy.cs" />
     <Compile Include="SExposedVideoData.cs" />
+    <Compile Include="SGUIEvent.cs" />
     <Compile Include="SIrrlichtCreationParameters.cs" />
+    <Compile Include="SJoystickEvent.cs" />
     <Compile Include="SJoystickInfo.cs" />
+    <Compile Include="SKeyInput.cs" />
     <Compile Include="SKeyMap.cs" />
     <Compile Include="SLight.cs" />
+    <Compile Include="SLogEvent.cs" />
     <Compile Include="SMaterial.cs" />
     <Compile Include="SMesh.cs" />
+    <Compile Include="SMouseInput.cs" />
     <Compile Include="SNamedPath.cs" />
     <Compile Include="SOverrideMaterial.cs" />
     <Compile Include="SParticle.cs" />
     <Compile Include="SSharedMeshBuffer.cs" />
     <Compile Include="SSkinMeshBuffer.cs" />
+    <Compile Include="SUserEvent.cs" />
     <Compile Include="SViewFrustum.cs" />
     <Compile Include="SWIGTYPE_p_EFileSystemType.cs" />
     <Compile Include="SWIGTYPE_p_EMESH_WRITER_TYPE.cs" />
@@ -263,6 +270,7 @@
     <Compile Include="SWIGTYPE_p_irr__core__triangle3dT_float_t.cs" />
     <Compile Include="SWIGTYPE_p_irr__core__vector2dT_unsigned_int_t.cs" />
     <Compile Include="SWIGTYPE_p_irr__core__vector3dT_unsigned_int_t.cs" />
+    <Compile Include="SWIGTYPE_p_irr__gui__IGUIElement.cs" />
     <Compile Include="SWIGTYPE_p_irr__gui__IGUIEnvironment.cs" />
     <Compile Include="SWIGTYPE_p_irr__gui__IGUIFont.cs" />
     <Compile Include="SWIGTYPE_p_irr__gui__IGUISpriteBank.cs" />
@@ -285,11 +293,11 @@
     <Compile Include="SWIGTYPE_p_p_char.cs" />
     <Compile Include="SWIGTYPE_p_p_irr__scene__ISceneNode.cs" />
     <Compile Include="SWIGTYPE_p_path.cs" />
+    <Compile Include="SWIGTYPE_p_short.cs" />
     <Compile Include="SWIGTYPE_p_unsigned_char.cs" />
     <Compile Include="SWIGTYPE_p_unsigned_int.cs" />
     <Compile Include="SWIGTYPE_p_unsigned_short.cs" />
     <Compile Include="SWIGTYPE_p_void.cs" />
-    <Compile Include="SWIGTYPE_p_wchar_t.cs" />
     <Compile Include="aabbox3df.cs" />
     <Compile Include="aabbox3di.cs" />
     <Compile Include="dimension2df.cs" />
@@ -309,6 +317,5 @@
     <Compile Include="vector3df.cs" />
     <Compile Include="vector3di.cs" />
     <Compile Include="vector3du32_proxy.cs" />
-    <Compile Include="IEventReceiver_proxy.cs" />
   </ItemGroup>
 </Project>

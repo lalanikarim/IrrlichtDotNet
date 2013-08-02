@@ -1,4 +1,4 @@
-%module irrlichtDotNet
+%module(directors="1") irrlichtDotNet
 %{
 /*
 #include "IrrCompileConfig.h"
@@ -38,7 +38,6 @@
 #include "ICursorControl.h"
 #include "IDummyTransformationSceneNode.h"
 #include "IDynamicMeshBuffer.h"
-#include "IEventReceiver.h"
 #include "IFileList.h"
 #include "IFileSystem.h"
 #include "IGeometryCreator.h"
@@ -164,6 +163,9 @@
 #include "vector3du32_proxy.h"
 #include "stringc_proxy.h"
 #include "irrlicht.h"
+//#include "EventReceiver.h"
+
+#include "SWIGIEventReceiver.h"
 
 using namespace irr;
 using namespace core;
@@ -171,8 +173,6 @@ using namespace video;
 using namespace scene;
 using namespace gui;
 using namespace io;
-
-typedef irr::core::irrAllocator<char> irrAllocatorChar;
 
 %}
 
@@ -183,12 +183,18 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 %ignore irr::core::squareroot(const irr::core::s32 f);
 %ignore irr::core::squareroot(const irr::core::s64 f);
 
+%include "wchar.i"
+%include "arrays_csharp.i"
+
+%include "typemaps.i"
+
+%apply float INPUT[] { f32* floats }
+
 %include "irrTypes.h"
 %include "irrMath.h"
 %include "irrList.h"
 %include "irrMap.h"
 %include "irrAllocator.h"
-%rename(irrString) irr::core::string;
 %include "irrString.h"
 %include "irrArray.h"
 %include "triangle3d.h"
@@ -218,6 +224,7 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 //%include "ESceneNodeTypes.h"
 %include "ETerrainElements.h"
 
+%include "IReferenceCounted.h"
 
 %include "IrrCompileConfig.h"
 %include "aabbox3d.h"
@@ -262,7 +269,13 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 %include "ICursorControl.h"
 %include "IDummyTransformationSceneNode.h"
 %include "IDynamicMeshBuffer.h"
+
+
+%feature("director") IEventReceiver;
+
 %include "IEventReceiver.h"
+%include "SWIGIEventReceiver.h"
+
 %include "IReadFile.h"
 //%include "IFileArchive.h"
 %include "IFileList.h"
@@ -323,7 +336,6 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 %include "IParticleSystemSceneNode.h" // also includes all emitters and attractors
 //%include "IQ3LevelMesh.h"
 //%include "IQ3Shader.h"
-%include "IReferenceCounted.h"
 %include "IRandomizer.h"
 
 
@@ -370,6 +382,8 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 %include "vector3du32_proxy.h"
 %include "stringc_proxy.h"
 
+//%include "EventReceiver.h"
+
 %include "irrlicht.h"
 //%template(vector2du) irr::core::vector2d< u32 >;
 %template(vector2df) irr::core::vector2d< f32 >;
@@ -391,4 +405,4 @@ typedef irr::core::irrAllocator<char> irrAllocatorChar;
 %template(stringc) irr::core::string<char,irrAllocatorChar>;
 //%template(stringw) irr::core::string<wchar_t,irr::core::irrAllocator<wchar_t>>;
 
-%template(path) irr::core::string<fschar_t>;
+//%template(path) irr::core::string<irr::fschar_t>;
