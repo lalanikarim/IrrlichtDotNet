@@ -20,3 +20,5 @@ Makefile
 filelist
 irrlicht_wrap.*
 IrrlichtDotNet.userprefs
+
+generated/

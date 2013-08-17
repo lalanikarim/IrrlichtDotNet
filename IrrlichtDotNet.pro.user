@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 2.8.0, 2013-08-02T13:36:51. -->
+<!-- Written by QtCreator 2.8.0, 2013-08-17T08:08:28. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -61,7 +61,7 @@
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">-c++ -csharp -I/usr/include/irrlicht *.i</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">-c++ -csharp -outdir generated -I/usr/include/irrlicht irrlicht.i</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.Command">swig</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{buildDir}</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Custom Process Step</value>
@@ -112,7 +112,7 @@
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">*.cs *.dll* *.exe*</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">*.cs *.dll* *.exe* *.o generated/*.cs</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.Command">rm</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{buildDir}</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Custom Process Step</value>
