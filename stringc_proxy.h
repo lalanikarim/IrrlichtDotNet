@@ -7,12 +7,15 @@
 using namespace irr;
 using namespace core;
 
-class stringc_proxy : public stringc
+class stringc_proxy
 {
 public:
-    stringc_proxy(stringc strc):stringc(strc) {}
-    stringc_proxy(const char* const c):stringc(c){}
-    stringc* getStringc(){return (stringc*)this;}
+    stringc_proxy(stringc strc):str(strc) {}
+    stringc_proxy(const char* const c):str(c){}
+    stringc getStringc(){return str;}
+    const char * getString(){return str.c_str();}
+private:
+    stringc str;
 };
 
 #endif // STRINGC_PROXY_H

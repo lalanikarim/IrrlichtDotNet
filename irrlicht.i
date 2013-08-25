@@ -1,8 +1,11 @@
-%module(directors="1") irrlichtDotNet
+%module(directors="1") IrrlichtDotNet
 %{
 #include "vector2du32_proxy.h"
 #include "vector3du32_proxy.h"
-#include "stringc_proxy.h"
+//#include "stringc_proxy.h"
+//#include "stringw_proxy.h"
+//#include "path_proxy.h"
+#include "iostream"
 #include "irrlicht.h"
 
 #include "SWIGIEventReceiver.h"
@@ -15,27 +18,7 @@ using namespace gui;
 using namespace io;
 
 %}
-%ignore irr::io::E_FILE_ARCHIVE_TYPE;
 
-%inline %{
-
-namespace irr
-{
-namespace io
-{
- enum E_FILE_ARCHIVE_TYPE {
-  EFAT_ZIP = ((int) 'Z'|((int) 'I' << 8)|((int) 'P' << 16)|((int) (0) << 24)),
-  EFAT_GZIP = ((int) 'g'|((int) 'z' << 8)|((int) 'i' << 16)|((int) 'p' << 24)),
-  EFAT_FOLDER = ((int) 'f'|((int) 'l' << 8)|((int) 'd' << 16)|((int) 'r' << 24)),
-  EFAT_PAK = ((int) 'P'|((int) 'A' << 8)|((int) 'K' << 16)|((int) (0) << 24)),
-  EFAT_NPK = ((int) 'N'|((int) 'P' << 8)|((int) 'K' << 16)|((int) (0) << 24)),
-  EFAT_TAR = ((int) 'T'|((int) 'A' << 8)|((int) 'R' << 16)|((int) (0) << 24)),
-  EFAT_WAD = ((int) 'W'|((int) 'A' << 8)|((int) 'D' << 16)|((int) (0) << 24)),
-  EFAT_UNKNOWN = ((int) 'u'|((int) 'n' << 8)|((int) 'k' << 16)|((int) 'n' << 24))
-};
-}
-}
-%}
 
 /* name conversionfor overloadedoperators. */
 %rename(add) *::operator+;
@@ -87,6 +70,10 @@ namespace io
 %rename(member_func_ref) *::operator->*;
 %rename(funcall)  *::operator();
 %rename(aref) 	*::operator[];
+%rename(tostringc) *::operator core::stringc() const;
+%rename(tostringw) *::operator core::stringw() const;
+
+%rename(irrstring) irr::core::stringc;
 
 %ignore irr::core::vector2d<unsigned int>::getLength() const;
 %ignore irr::core::squareroot(unsigned int);
@@ -94,7 +81,104 @@ namespace io
 %ignore irr::core::squareroot(const irr::core::f64 f);
 %ignore irr::core::squareroot(const irr::core::s32 f);
 %ignore irr::core::squareroot(const irr::core::s64 f);
+%ignore irr::scene::ISceneNode::setName(const core::stringc& name);
 
+%typemap(cstype)  path& "String"
+%typemap(imtype)  path& "String"
+%typemap(csout)  path& {
+   return $imcall;$excode
+}
+%typemap(out)  path& %{
+    char *tempString = new char[$1->size()];
+    for(u32 tc = 0; tc < $1->size(); tc++)
+    {
+        tempString[tc] = (*$1)[tc];
+    }
+    $result = tempString;
+%}
+
+%apply path& {irr::io::path&, const path&, const io::path&, stringc&, const stringc&, irr::core::stringc&, const irr::core::stringc&};
+
+%typemap(csin)  path& "$csinput"
+//    pre=" path_proxy temp$csinput = new path_proxy($csinput);") const  path& "$csclassname.getCPtr(temp$csinput.getPath())"
+%typemap(in)  path& %{
+   $1 = new path((fschar_t *)$input);
+%}
+
+%apply path& {const path&, irr::io::path&, const irr::io::path&, io::path&, const io::path&};
+
+%typemap(csin)  stringc& "$csinput"
+%typemap(in)  stringc& %{
+   $1 = new stringc((char *)$input);
+%}
+
+%apply stringc& {const stringc&, irr::core::stringc&, const irr::core::stringc&};
+
+%typemap(cstype) path "String"
+%typemap(imtype) path "String"
+%typemap(csout) path {
+   return $imcall;$excode
+}
+%typemap(out) path %{
+    fschar_t *tempString = new fschar_t[$1.size()];
+    for(u32 tc = 0; tc < $1.size(); tc++)
+    {
+        tempString[tc] = (*&$1)[tc];
+    }
+    $result = tempString;
+%}
+
+%apply path {irr::io::path}
+
+%typemap(cstype) stringc "String"
+%typemap(imtype) stringc "String"
+%typemap(csout) stringc {
+   return $imcall;$excode
+}
+%typemap(out) stringc %{
+    char *tempString = new char[$1.size()];
+    for(u32 tc = 0; tc < $1.size(); tc++)
+    {
+        tempString[tc] = (*&$1)[tc];
+    }
+    $result = tempString;
+%}
+%typemap(csin)  stringc "$csinput"
+%typemap(in)  stringc %{
+   $1 = new stringc((char *)$input);
+%}
+/*
+%typemap(csvarin, excode=SWIGEXCODE2) core::stringc %{
+    set {
+      $imcall;$excode
+    } %}
+
+%typemap(csvarout, excode=SWIGEXCODE2) core::stringc %{
+    get {
+      return $imcall;$excode
+    } %}
+*/
+%apply stringc {core::stringc, irr::core::stringc};
+/*%inline %{
+
+namespace irr
+{
+namespace io
+{
+ enum E_FILE_ARCHIVE_TYPE {
+  EFAT_ZIP = ((int) 'Z'|((int) 'I' << 8)|((int) 'P' << 16)|((int) (0) << 24)),
+  EFAT_GZIP = ((int) 'g'|((int) 'z' << 8)|((int) 'i' << 16)|((int) 'p' << 24)),
+  EFAT_FOLDER = ((int) 'f'|((int) 'l' << 8)|((int) 'd' << 16)|((int) 'r' << 24)),
+  EFAT_PAK = ((int) 'P'|((int) 'A' << 8)|((int) 'K' << 16)|((int) (0) << 24)),
+  EFAT_NPK = ((int) 'N'|((int) 'P' << 8)|((int) 'K' << 16)|((int) (0) << 24)),
+  EFAT_TAR = ((int) 'T'|((int) 'A' << 8)|((int) 'R' << 16)|((int) (0) << 24)),
+  EFAT_WAD = ((int) 'W'|((int) 'A' << 8)|((int) 'D' << 16)|((int) (0) << 24)),
+  EFAT_UNKNOWN = ((int) 'u'|((int) 'n' << 8)|((int) 'k' << 16)|((int) 'n' << 24))
+};
+}
+}
+%}
+*/
 %include "wchar.i"
 %include "arrays_csharp.i"
 
@@ -293,9 +377,13 @@ namespace io
 %include "IrrlichtDevice.h"
 %include "vector2du32_proxy.h"
 %include "vector3du32_proxy.h"
-%include "stringc_proxy.h"
+//%include "stringc_proxy.h"
+//%include "stringw_proxy.h"
+//%include "path_proxy.h"
 
 %include "irrlicht.h"
+
+
 //%template(vector2du) irr::core::vector2d< u32 >;
 %template(vector2df) irr::core::vector2d< f32 >;
 %template(vector2di) irr::core::vector2d< s32 >;
@@ -308,12 +396,62 @@ namespace io
 %template(vector3df) irr::core::vector3d<f32>;
 %template(vector3di) irr::core::vector3d<s32>;
 
-
 %template(aabbox3df) irr::core::aabbox3d<f32> ;
 %template(aabbox3di) irr::core::aabbox3d<s32>;
 
-%template(irrAllocatorChar) irr::core::irrAllocator<char>;
-%template(stringc) irr::core::string<char,irrAllocatorChar>;
-//%template(stringw) irr::core::string<wchar_t,irr::core::irrAllocator<wchar_t>>;
 
-//%template(path) irr::core::string<irr::fschar_t>;
+/*
+
+%typemap(cstype) path "String"
+%typemap(imtype) path "String"
+%typemap(csout) path {
+    return $imcall;$excode
+}
+
+%typemap(out) path %{
+    std::cout << $1.c_str() << std::endl;
+    char *tempString = new char[$1.size()];
+    for(u32 tc = 0; tc < $1.size(); tc++)
+    {
+        tempString[tc] = (*&$1)[tc];
+    }
+    $result = tempString;
+%}
+
+%typemap(cstype) const  path& "String"
+%typemap(imtype) const  path& "String"
+%typemap(csout) const  path& {
+    return $imcall;$excode
+}
+
+%typemap(out) const  path& %{
+    std::cout << $1->c_str() << std::endl;
+    char *tempString = new char[$1->size()];
+    for(u32 tc = 0; tc < $1->size(); tc++)
+    {
+        tempString[tc] = (*$1)[tc];
+    }
+    $result = tempString;
+%}
+%typemap(csin) const  path& "$csclassname.getCPtr($csinput)"
+%typemap(in) const  path& %{
+    $1 = new path(static_cast<char *>( $input));
+%}
+*/
+%inline %{
+
+irr::core::stringc test_stringConversion()
+{
+   const irr::core::stringc str = "test me";
+   return str;
+}
+
+%}
+
+%inline %{
+path test_getPath()
+{
+    return path("test path");
+}
+%}
+
