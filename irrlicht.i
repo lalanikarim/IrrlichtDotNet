@@ -83,18 +83,17 @@ using namespace io;
 %ignore irr::core::squareroot(const irr::core::s64 f);
 %ignore irr::scene::ISceneNode::setName(const core::stringc& name);
 
+%typemap(imtype,
+         inattributes="[MarshalAs(UnmanagedType.LPStr)]",
+         outattributes="[return: MarshalAs(UnmanagedType.LPStr)]") const char * "String"
+
 %typemap(cstype)  path& "String"
 %typemap(imtype)  path& "String"
 %typemap(csout)  path& {
    return $imcall;$excode
 }
 %typemap(out)  path& %{
-    char *tempString = new char[$1->size()];
-    for(u32 tc = 0; tc < $1->size(); tc++)
-    {
-        tempString[tc] = (*$1)[tc];
-    }
-    $result = tempString;
+    $result = const_cast<char*>($1->c_str());
 %}
 
 %apply path& {irr::io::path&, const path&, const io::path&, stringc&, const stringc&, irr::core::stringc&, const irr::core::stringc&};
@@ -120,12 +119,7 @@ using namespace io;
    return $imcall;$excode
 }
 %typemap(out) path %{
-    fschar_t *tempString = new fschar_t[$1.size()];
-    for(u32 tc = 0; tc < $1.size(); tc++)
-    {
-        tempString[tc] = (*&$1)[tc];
-    }
-    $result = tempString;
+    $result = const_cast<char*>($1.c_str());
 %}
 
 %apply path {irr::io::path}
@@ -136,12 +130,7 @@ using namespace io;
    return $imcall;$excode
 }
 %typemap(out) stringc %{
-    char *tempString = new char[$1.size()];
-    for(u32 tc = 0; tc < $1.size(); tc++)
-    {
-        tempString[tc] = (*&$1)[tc];
-    }
-    $result = tempString;
+    $result = const_cast<char*>($1.c_str());
 %}
 %typemap(csin)  stringc "$csinput"
 %typemap(in)  stringc %{
